@@ -130,7 +130,7 @@ dmypy.json
 
 
 #pandas
-.feather
+*.feather
 
 #my stuff
 data
