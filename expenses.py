@@ -56,7 +56,7 @@ def agg_over_categories(df_org):
         aggfunc=np.sum,
     ).iloc[:, :-1]
     pivot["Change (%)"] = (pivot.iloc[:, 1] / pivot.iloc[:, 0] - 1) * 100
-    return pivot.round(0)
+    return pivot.round(0),df_org
 
 
 def agg_over_subcategories(df_org, selected_subcategories):
@@ -72,7 +72,7 @@ def agg_over_subcategories(df_org, selected_subcategories):
         aggfunc=np.sum,
     ).iloc[:, :-1]
     pivot["Change (%)"] = (pivot.iloc[:, 1] / pivot.iloc[:, 0] - 1) * 100
-    return pivot.round(0)
+    return pivot.round(0),df
 
 
 def agg_over_prio(df_org, selected_priorities):
@@ -88,7 +88,7 @@ def agg_over_prio(df_org, selected_priorities):
         aggfunc=np.sum,
     ).iloc[:, :-1]
     pivot["Change (%)"] = (pivot.iloc[:, 1] / pivot.iloc[:, 0] - 1) * 100
-    return pivot.round(0)
+    return pivot.round(0),df
 
 
 ###################
@@ -99,7 +99,7 @@ if __name__ == "__main__":
     try:
         config_file = sys.argv[1]
     except IndexError:
-        print("Error: run './expenses.py path-to-config.ini'")
+        print("Error: run 'streamlit expenses.py path-to-config.ini'")
         sys.exit(1)
     ### configs ###
     config_file = Path(config_file)
@@ -175,7 +175,7 @@ if __name__ == "__main__":
     else:
         #agg_type == "categories":
         agg_list = None
-
+    show_raw_data = st.sidebar.checkbox("Show original data",)
     ###########
     ## main ###
     ###########
@@ -188,13 +188,14 @@ if __name__ == "__main__":
     )
 
     if agg_type == "subcategories":
-        out_table = agg_over_subcategories(
+        out_table,raw_data = agg_over_subcategories(
             df_org=expenses, selected_subcategories=agg_list
         )
-        st.table(out_table)
     elif agg_type == "priorities":
-        out_table = agg_over_prio(df_org=expenses, selected_priorities=agg_list)
-        st.table(out_table)
-    elif agg_type == "categories":
-        out_table = agg_over_categories(df_org=expenses)
-        st.table(out_table)
+        out_table,raw_data = agg_over_prio(df_org=expenses, selected_priorities=agg_list)
+    else:
+        out_table,raw_data = agg_over_categories(df_org=expenses)
+    st.table(out_table)
+    if show_raw_data:
+        raw_data = raw_data[["date","subcategory","amount","notes"]].round(0)
+        st.dataframe(raw_data)
