@@ -148,7 +148,7 @@ if __name__ == "__main__":
 
     this_month = today.month
     current_months = range(
-        1, this_month
+        1, 13#,this_month
     )  # todo: range(min_month_current_year, max_month_current_year)
     month_list = st.sidebar.multiselect(
         "Months:", current_months, default=current_months
