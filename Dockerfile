@@ -1,6 +1,6 @@
 FROM python:3.9-slim
 
-EXPOSE 8501
+#EXPOSE 8501
 
 #Copies scripts and data directory to container
 COPY ./app /app

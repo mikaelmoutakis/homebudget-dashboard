@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
-docker compose up -d
-open "http://localhost:8501"
+docker compose up -d && \
+	sleep 3 && \
+	open "http://localhost:8501"
