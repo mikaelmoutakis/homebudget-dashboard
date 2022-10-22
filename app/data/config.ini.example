@@ -1,6 +1,8 @@
 [CONFIGS]
-host = woland.moutakis.name #IP or domain for your smartphone
-datadir = data #directory for the feather-file
+#IP or domain for your smartphone
+host = woland.moutakis.name 
+#directory for the feather-file
+datadir = /app/data 
 
 [SUBCATEGORIES]
 #examples of HomeBudget subcategories and their priority

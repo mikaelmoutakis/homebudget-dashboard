@@ -133,5 +133,6 @@ dmypy.json
 *.feather
 
 #my stuff
-data
+app/data/config.ini
 .idea
+.DS_Store
